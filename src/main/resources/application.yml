@@ -1,0 +1,7 @@
+datasource:
+  driverName: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/fp9sb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+  username: postgres
+  password: root
+  initialSize: 10
+  maxActive: 7
