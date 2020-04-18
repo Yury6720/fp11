@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 @ToString
+//@Builder
 public class Address {
 
     @Id
@@ -26,13 +27,13 @@ public class Address {
     private String street;
 
     @Column
-    private String building;
+    private Integer building;
 
     @Column
     private Integer corpus;
 
     @Column
-    private String flat;
+    private Integer flat;
 
 
 }

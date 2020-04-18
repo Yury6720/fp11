@@ -27,7 +27,7 @@ public class Order {
     private Timestamp date;
 
     @Column(name = "is_active")
-    private String isActive;
+    private boolean isActive;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
