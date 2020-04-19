@@ -5,3 +5,8 @@ datasource:
   password: root
   initialSize: 10
   maxActive: 7
+
+---
+token:
+  jwtSecret: gytghjknbv
+  jwtExpirationInMs: 604800000

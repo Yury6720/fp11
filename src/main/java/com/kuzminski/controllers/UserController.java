@@ -8,6 +8,8 @@ import com.kuzminski.repository.RoleRepository;
 import com.kuzminski.repository.UserRepository;
 import com.kuzminski.service.RoleService;
 import com.kuzminski.service.UserService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,15 +22,19 @@ import java.util.List;
 @RequestMapping(value = "/user")
 public class UserController {
 
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private RoleRepository roleRepository;
-  @Autowired
-  private RoleService roleService;
+  @Autowired private UserRepository userRepository;
+  @Autowired private UserService userService;
+  @Autowired private RoleRepository roleRepository;
+  @Autowired private RoleService roleService;
 
+  @ApiImplicitParams({
+    @ApiImplicitParam(
+        name = "Auth-Token",
+        value = "token",
+        required = true,
+        dataType = "string",
+        paramType = "header")
+  })
   @GetMapping("/all")
   private ResponseEntity<List<User>> getAllUsers() {
     return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
@@ -47,10 +53,11 @@ public class UserController {
   @PostMapping
   private ResponseEntity<User> createNewUser(@RequestBody UserRequest request) {
     User user = new User();
-            userRepository.saveAndFlush(userService.create(user, request));
+    userRepository.saveAndFlush(userService.create(user, request));
     Roles roles = roleRepository.saveAndFlush(roleService.getDefaultRole(user.getId()));
     return new ResponseEntity<>(user, HttpStatus.CREATED);
   }
+
   @ApiOperation(value = "Update your Email or Password")
   @PutMapping(value = "/updateByUsername")
   private ResponseEntity<User> updateEmailOrPasswordByUsername(@RequestBody UserRequest request) {
@@ -58,6 +65,7 @@ public class UserController {
     userRepository.saveAndFlush(userService.create(user, request));
     return new ResponseEntity<>(user, HttpStatus.OK);
   }
+
   @ApiOperation(value = "Update your Username by Emale")
   @PutMapping(value = "/updateByEmail")
   private ResponseEntity<User> updateUsernameByEmail(@RequestBody UserRequest request) {
@@ -67,7 +75,7 @@ public class UserController {
   }
 
   @ApiOperation(value = "Add phone number ")
-  @PutMapping (value = "/phone" )
+  @PutMapping(value = "/phone")
   private ResponseEntity<User> setPhone(@RequestBody PhoneRequest phoneRequest) {
     User user = userRepository.findUserByUsername(phoneRequest.getUsername());
     user.setPhone(phoneRequest.getPhone());
@@ -77,11 +85,10 @@ public class UserController {
 
   @ApiOperation(value = "Fake Delete")
   @DeleteMapping(value = "/{username}")
-  private ResponseEntity<User> deleteUser (@PathVariable ("username") String username){
+  private ResponseEntity<User> deleteUser(@PathVariable("username") String username) {
     User user = userRepository.findUserByUsername(username);
     user.setActive(false);
     userRepository.saveAndFlush(user);
     return new ResponseEntity<User>(user, HttpStatus.GONE);
   }
-
 }

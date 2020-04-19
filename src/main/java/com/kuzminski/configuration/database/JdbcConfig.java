@@ -15,7 +15,7 @@ import javax.persistence.EntityManagerFactory;
 @ComponentScan("com.kuzminski")
 public class JdbcConfig {
     @Autowired
-    @Qualifier("dataSource")
+    @Qualifier("myDataSource")
     private BasicDataSource basicDataSource;
 
     @Bean("namedJdbcTemplate")

@@ -32,7 +32,7 @@ public class DataBaseConfig {
     private String username;
 
     private String maxActive;
-    @Bean(value = "dataSource", destroyMethod = "close")
+    @Bean(value = "myDataSource", destroyMethod = "close")
     @Scope("singleton")
     @Primary
     public BasicDataSource getDatasource() {
