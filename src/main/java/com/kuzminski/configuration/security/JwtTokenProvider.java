@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Slf4j
@@ -35,6 +37,12 @@ public class JwtTokenProvider {
         Jwts.parser().setSigningKey(tokenConfig.getJwtSecret()).parseClaimsJws(token).getBody();
 
     return Long.parseLong(claims.getSubject());
+  }
+
+  public Long getActualUserId (HttpServletRequest request){
+
+    return getUserIdFromJWT(request.getHeader("auth-token"));
+
   }
 
   public boolean validateToken(String authToken) {

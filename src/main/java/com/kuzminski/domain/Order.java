@@ -1,7 +1,6 @@
 package com.kuzminski.domain;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,30 +17,35 @@ import java.util.Set;
 @ToString
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  private Long id;
 
-    @Column(name = "date")
-    private Timestamp date;
+  @Column(name = "date")
+  private Timestamp date;
 
-    @Column(name = "is_active")
-    private boolean isActive;
+  @Column(name = "is_active")
+  private boolean isActive;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
+  //    @JsonBackReference
+  //    @ManyToOne(fetch = FetchType.EAGER)
+  //    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+  //    @JsonIdentityReference(alwaysAsId = true)
+  //    private User user;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id")
+  @JsonIdentityReference(alwaysAsId = true)
+  private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "delivery")
-    private Address address;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "delivery")
+  private Address address;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "s_order_goods",
-            joinColumns = @JoinColumn(name = "good_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private Set<Good> orderGoods = Collections.emptySet();
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "s_order_goods",
+      joinColumns = @JoinColumn(name = "good_id"),
+      inverseJoinColumns = @JoinColumn(name = "order_id"))
+  private Set<Goods> orderGoods = Collections.emptySet();
 }

@@ -20,19 +20,19 @@ public class Address {
     @Column(name = "id")
     private Long id;
 
-    @Column
+    @Column(name = "city")
     private String city;
 
-    @Column
+    @Column(name = "street")
     private String street;
 
-    @Column
+    @Column(name = "building")
     private Integer building;
 
-    @Column
+    @Column(name = "corpus")
     private Integer corpus;
 
-    @Column
+    @Column(name = "flat")
     private Integer flat;
 
 

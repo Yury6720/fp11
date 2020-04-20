@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class Good {
+public class Goods {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

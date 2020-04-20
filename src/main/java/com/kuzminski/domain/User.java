@@ -1,6 +1,7 @@
 package com.kuzminski.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -51,16 +52,15 @@ public class User {
   //  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
   //  private Set<Roles> userRoles = Collections.emptySet();
   @JsonIgnore
-  @JsonManagedReference
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
   private Set<Roles> roles = Collections.emptySet();
-
-  @JsonManagedReference
-  @OneToMany(
-      fetch = FetchType.EAGER,
-      cascade = {CascadeType.ALL},
-      mappedBy = "user")
-  private Set<Order> userOrders = Collections.emptySet();
+//
+//  @JsonManagedReference
+//  @OneToMany(
+//      fetch = FetchType.EAGER,
+//      cascade = {CascadeType.ALL},
+//      mappedBy = "user")
+//  private Set<Order> userOrders = Collections.emptySet();
 
   //    public void setRoles(Set<Roles> roles) {
   //        if (this.userRoles==null){

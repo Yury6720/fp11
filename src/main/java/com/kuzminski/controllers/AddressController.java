@@ -3,6 +3,9 @@ package com.kuzminski.controllers;
 import com.kuzminski.controllers.requests.AddressRequest;
 import com.kuzminski.domain.Address;
 import com.kuzminski.repository.AddressRepository;
+import com.kuzminski.service.AddressService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -18,21 +22,51 @@ import java.util.List;
 @RequestMapping("/address")
 public class AddressController {
 
-    @Autowired
-    private AddressRepository addressRepository;
+  @Autowired private AddressRepository addressRepository;
+  @Autowired private AddressService addressService;
 
+  @ApiImplicitParams({
+    @ApiImplicitParam(
+        name = "Auth-Token",
+        value = "token",
+        required = true,
+        dataType = "string",
+        paramType = "header")
+  })
+  @ApiOperation(value = "Get All Addresses")
+  @GetMapping("/all")
+  public ResponseEntity<List<Address>> getAddressList() {
+    return new ResponseEntity<>(addressRepository.findAll(), HttpStatus.OK);
+  }
 
-    @ApiOperation(value = "Get all Customers from server")
-    @GetMapping("/all")
-    public ResponseEntity<List<Address>> getAddressList() {
-        return new ResponseEntity<>(addressRepository.findAll(), HttpStatus.OK);
-    }
+  @ApiImplicitParams({
+    @ApiImplicitParam(
+        name = "Auth-Token",
+        value = "token",
+        required = true,
+        dataType = "string",
+        paramType = "header")
+  })
+  @ApiOperation(value = "Add new Delivery Address")
+  @PostMapping
+  private ResponseEntity<Address> createNewAddress(@Valid @ModelAttribute AddressRequest request) {
+    Address address = new Address();
+    addressRepository.saveAndFlush(addressService.createUpdate(address, request));
+    return new ResponseEntity<>(address, HttpStatus.CREATED);
+  }
 
-//    @ApiOperation(value = "Add new Delivery Address")
-//    @PostMapping
-//    private ResponseEntity <Address> createNewAddress (@RequestBody AddressRequest request){
-//        Address address = new Address();
-//        addressRepository.saveAndFlush(a)
-//        return
-//    }
+  @ApiImplicitParams({
+    @ApiImplicitParam(
+        name = "Auth-Token",
+        value = "token",
+        required = true,
+        dataType = "string",
+        paramType = "header")
+  })
+  @ApiOperation(value = "Delete Delivery Address")
+  @DeleteMapping(value = "/{id}")
+  @ResponseStatus(HttpStatus.GONE)
+  private void deleteAddress(@PathVariable("id") Long id) {
+    addressRepository.deleteById(id);
+  }
 }

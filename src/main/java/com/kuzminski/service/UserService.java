@@ -1,5 +1,6 @@
 package com.kuzminski.service;
 
+import com.kuzminski.configuration.security.secureResponseRequest.SignUpRequest;
 import com.kuzminski.controllers.requests.UserRequest;
 import com.kuzminski.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,6 @@ import java.util.Date;
 public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-
 
     public User create (User user, UserRequest request){
         user.setUsername(request.getUsername());
