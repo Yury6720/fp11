@@ -1,6 +1,6 @@
 //package com.kuzminski.domain;
 //
-//import com.fasterxml.jackson.annotation.JsonBackReference;
+//import com.fasterxml.jackson.annotation.*;
 //import lombok.*;
 //
 //import javax.persistence.*;
@@ -14,26 +14,31 @@
 //@ToString
 //public class OrderGoods {
 //
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
+//  @Id
+//  @GeneratedValue(strategy = GenerationType.IDENTITY)
+//  private Long id;
 //
-//    @Column(name = "order_id")
-//    private Long orderId;
+////  @Column(name = "order_id")
+////  private Long orderId;
+////
+////  @Column(name = "good_id")
+////  private Long goodId;
 //
-//    @Column(name = "good_id")
-//    private Long goodId;
+//  @Column(name = "count")
+//  private Integer count;
 //
-//    @Column(name = "count")
-//    private Integer count;
+////  @JsonBackReference
+////  @ManyToOne(fetch = FetchType.LAZY)
+////  @JoinColumn(name = "order_id", insertable = false, updatable = false)
 //
-//    @JsonBackReference
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "order_id", insertable = false, updatable = false)
-//    private Order order;
-//
-//    @JsonBackReference
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "good_id", insertable = false, updatable = false)
-//    private Good good;
+////  @ManyToOne(fetch = FetchType.LAZY)
+////  @JoinColumn(name = "order_id", nullable = false, insertable = false, updatable = false)
+////  private Order order;
+////
+//////  @JsonBackReference
+//////  @ManyToOne(fetch = FetchType.LAZY)
+//////  @JoinColumn(name = "good_id", insertable = false, updatable = false)
+////  @ManyToOne(fetch = FetchType.LAZY)
+////  @JoinColumn(name = "good_id", nullable = false, insertable = false, updatable = false)
+////  private Goods goods;
 //}

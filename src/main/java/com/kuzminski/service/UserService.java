@@ -1,6 +1,5 @@
 package com.kuzminski.service;
 
-import com.kuzminski.configuration.security.secureResponseRequest.SignUpRequest;
 import com.kuzminski.controllers.requests.UserRequest;
 import com.kuzminski.domain.User;
 import lombok.RequiredArgsConstructor;

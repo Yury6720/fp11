@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode
 @ToString
-//@Builder
 public class Address {
 
     @Id

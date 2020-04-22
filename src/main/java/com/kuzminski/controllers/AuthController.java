@@ -1,9 +1,9 @@
 package com.kuzminski.controllers;
 
 import com.kuzminski.configuration.security.JwtTokenProvider;
-import com.kuzminski.configuration.security.secureResponseRequest.ApiResponse;
-import com.kuzminski.configuration.security.secureResponseRequest.JwtAuthenticationResponse;
-import com.kuzminski.configuration.security.secureResponseRequest.LoginRequest;
+import com.kuzminski.configuration.security.request.ApiResponse;
+import com.kuzminski.configuration.security.request.JwtAuthenticationResponse;
+import com.kuzminski.configuration.security.request.LoginRequest;
 import com.kuzminski.controllers.requests.UserRequest;
 import com.kuzminski.domain.User;
 import com.kuzminski.repository.RoleRepository;

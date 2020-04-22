@@ -1,4 +1,4 @@
-package com.kuzminski.configuration.security.secureResponseRequest;
+package com.kuzminski.configuration.security.request;
 
 import lombok.*;
 

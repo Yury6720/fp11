@@ -10,11 +10,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "s_roles")
-// @RequiredArgsConstructor
-//@Builder
 @Getter
 @Setter
-//@EqualsAndHashCode
 @ToString
 public class Roles {
 
@@ -29,10 +26,6 @@ public class Roles {
   @Column(name = "role_name")
   private String roleName;
 
-  //    @JsonBackReference
-  //    @OneToOne
-  //    @JoinColumn(name = "user_id")
-  //    private User user;
   @JsonBackReference
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", insertable = false, updatable = false)
