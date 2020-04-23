@@ -1,6 +1,7 @@
 package com.kuzminski.controllers;
 
 import com.kuzminski.controllers.requests.OrderAddressUpdateRequest;
+import com.kuzminski.controllers.requests.OrderGoodsRequest;
 import com.kuzminski.domain.Order;
 import com.kuzminski.repository.OrderRepository;
 import com.kuzminski.repository.UserRepository;
@@ -95,14 +96,34 @@ public class OrderController {
         dataType = "string",
         paramType = "header")
   })
-  @PutMapping
+  @PutMapping(value = "/addAddress")
   private ResponseEntity addAddress(
       @ModelAttribute OrderAddressUpdateRequest orderAddressUpdateRequest,
       HttpServletRequest request) {
-    if (orderValidator.orderAccessor(request, orderAddressUpdateRequest)) {
+    if (orderValidator.orderAccessor(request, orderAddressUpdateRequest.getOrderId())) {
       return new ResponseEntity(
           orderRepository.save(orderService.addAddress(orderAddressUpdateRequest, request)),
           HttpStatus.OK);
+    } else return new ResponseEntity(HttpStatus.BAD_REQUEST);
+  }
+
+  @ApiOperation(value = "Add Goods")
+  @ApiImplicitParams({
+          @ApiImplicitParam(
+                  name = "Auth-Token",
+                  value = "token",
+                  required = true,
+                  dataType = "string",
+                  paramType = "header")
+  })
+  @PutMapping(value = ("/ad"))
+  private ResponseEntity addGoods(
+          @ModelAttribute OrderGoodsRequest orderGoodsRequest,
+          HttpServletRequest request) {
+    if (orderValidator.orderAccessor(request, orderGoodsRequest.getOrderId())) {
+      return new ResponseEntity(
+              orderRepository.save(orderService.addGoods(orderGoodsRequest, request)),
+              HttpStatus.OK);
     } else return new ResponseEntity(HttpStatus.BAD_REQUEST);
   }
 

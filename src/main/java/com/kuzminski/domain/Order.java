@@ -45,7 +45,7 @@ public class Order {
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "s_order_goods",
-      joinColumns = @JoinColumn(name = "good_id"),
-      inverseJoinColumns = @JoinColumn(name = "order_id"))
+      joinColumns = @JoinColumn(name = "order_id"),
+      inverseJoinColumns = @JoinColumn(name = "good_id"))
   private Set<Goods> orderGoods = Collections.emptySet();
 }
