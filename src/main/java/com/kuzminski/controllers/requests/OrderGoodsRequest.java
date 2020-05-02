@@ -15,7 +15,6 @@ public class OrderGoodsRequest {
     @NotNull
     private Long goodsId;
 
-    @NotEmpty
     @NotNull
     private Integer count;
 }

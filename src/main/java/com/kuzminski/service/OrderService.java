@@ -57,6 +57,7 @@ public class OrderService {
     Set<Goods> goodsSet = new HashSet<>();
     goodsSet.add(goods);
     order.setOrderGoods(goodsSet);
+    order.setCount(orderGoodsRequest.getCount());
     return order;
   }
 }

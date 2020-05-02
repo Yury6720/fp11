@@ -8,16 +8,19 @@ import javax.validation.constraints.Size;
 
 @Data
 public class GoodsRequest {
+
+    private Long id;
+
     @NotEmpty
     @NotNull
     @Size(max = 50)
     private String name;
 
-    @NotEmpty
+
     @NotNull
     private Double price;
 
-    @NotEmpty
+    @NotNull
     private Double size;
 
     private String color;

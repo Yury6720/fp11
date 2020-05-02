@@ -1,5 +1,7 @@
 package com.kuzminski.controllers;
 
+import com.kuzminski.controllers.requests.GenericIdRequest;
+import com.kuzminski.controllers.requests.GenericNameRequest;
 import com.kuzminski.controllers.requests.PhoneRequest;
 import com.kuzminski.controllers.requests.UserRequest;
 import com.kuzminski.domain.User;
@@ -50,9 +52,9 @@ public class UserController {
                   dataType = "string",
                   paramType = "header")
   })
-  @GetMapping(value = "/{id}")
-  private ResponseEntity<User> getUserById(@PathVariable("id") Long userId) {
-    return new ResponseEntity(userRepository.findById(userId), HttpStatus.FOUND);
+  @GetMapping(value = "/getById")
+  private ResponseEntity<User> getUserById(@ModelAttribute GenericIdRequest genericIdRequest) {
+    return new ResponseEntity(userRepository.findById(genericIdRequest.getId()), HttpStatus.FOUND);
   }
 
   @ApiOperation(value = "Get User by Username ")
@@ -64,10 +66,10 @@ public class UserController {
                   dataType = "string",
                   paramType = "header")
   })
-  @GetMapping(value = "{/username}")
+  @GetMapping(value = "getByName")
   private ResponseEntity<User> getUserByUsername(
-      @Valid @ModelAttribute("username") String username) {
-    return new ResponseEntity(userRepository.findUserByUsername(username), HttpStatus.FOUND);
+          @Valid @ModelAttribute GenericNameRequest genericNameRequest) {
+    return new ResponseEntity(userRepository.findUserByUsername(genericNameRequest.getName()), HttpStatus.FOUND);
   }
 
   //  @PostMapping
@@ -136,9 +138,9 @@ public class UserController {
         paramType = "header")
   })
   @ApiOperation(value = "Fake Delete")
-  @DeleteMapping(value = "/{username}")
-  private ResponseEntity<User> deleteUser(@PathVariable("username") String username) {
-    User user = userRepository.findUserByUsername(username);
+  @DeleteMapping
+  private ResponseEntity<User> deleteUser(@ModelAttribute GenericNameRequest genericNameRequest) {
+    User user = userRepository.findUserByUsername(genericNameRequest.getName());
         user.setActive(false);
         userRepository.saveAndFlush(user);
     return new ResponseEntity<User>(user, HttpStatus.GONE);

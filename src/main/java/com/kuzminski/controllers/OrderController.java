@@ -1,5 +1,7 @@
 package com.kuzminski.controllers;
 
+import com.kuzminski.controllers.requests.GenericIdRequest;
+import com.kuzminski.controllers.requests.GenericNameRequest;
 import com.kuzminski.controllers.requests.OrderAddressUpdateRequest;
 import com.kuzminski.controllers.requests.OrderGoodsRequest;
 import com.kuzminski.domain.Order;
@@ -49,9 +51,9 @@ public class OrderController {
         dataType = "string",
         paramType = "header")
   })
-  @GetMapping(value = "/{id}")
-  private ResponseEntity<Order> getOrderById(@PathVariable("id") Long orderId) {
-    return new ResponseEntity(orderRepository.findById(orderId), HttpStatus.FOUND);
+  @GetMapping(value = "/getById")
+  private ResponseEntity<Order> getOrderById(@ModelAttribute GenericIdRequest genericIdRequest) {
+    return new ResponseEntity(orderRepository.findById(genericIdRequest.getId()), HttpStatus.FOUND);
   }
 
   @ApiOperation(value = "Get Orders by Username")
@@ -63,11 +65,11 @@ public class OrderController {
         dataType = "string",
         paramType = "header")
   })
-  @GetMapping(value = "{/username}")
+  @GetMapping(value = "/getByName")
   private ResponseEntity<List<Order>> getOrdersByUsername(
-      @PathVariable("username") String username) {
+          @ModelAttribute GenericNameRequest genericNameRequest) {
     List<Order> orders =
-        orderRepository.findOrdersByUser(userRepository.findUserByUsername(username));
+        orderRepository.findOrdersByUser(userRepository.findUserByUsername(genericNameRequest.getName()));
     return new ResponseEntity(orders, HttpStatus.FOUND);
   }
 
@@ -116,7 +118,7 @@ public class OrderController {
                   dataType = "string",
                   paramType = "header")
   })
-  @PutMapping(value = ("/ad"))
+  @PutMapping(value = ("/add"))
   private ResponseEntity addGoods(
           @ModelAttribute OrderGoodsRequest orderGoodsRequest,
           HttpServletRequest request) {
@@ -128,10 +130,18 @@ public class OrderController {
   }
 
   @ApiOperation(value = "Delete Order")
-  @DeleteMapping(value = "/{id}")
+  @ApiImplicitParams({
+          @ApiImplicitParam(
+                  name = "Auth-Token",
+                  value = "token",
+                  required = true,
+                  dataType = "string",
+                  paramType = "header")
+  })
+  @DeleteMapping
   @ResponseStatus(HttpStatus.GONE)
-  private void deleteOrder(@PathVariable("id") Long id) {
-    orderRepository.deleteById(id);
+  private void deleteOrder(@ModelAttribute GenericIdRequest genericIdRequest) {
+          orderRepository.deleteById(genericIdRequest.getId());
   }
 
 }

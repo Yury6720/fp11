@@ -1,6 +1,7 @@
 package com.kuzminski.controllers;
 
 import com.kuzminski.controllers.requests.AddressRequest;
+import com.kuzminski.controllers.requests.GenericIdRequest;
 import com.kuzminski.domain.Address;
 import com.kuzminski.repository.AddressRepository;
 import com.kuzminski.service.AddressService;
@@ -64,9 +65,9 @@ public class AddressController {
         paramType = "header")
   })
   @ApiOperation(value = "Delete Delivery Address")
-  @DeleteMapping(value = "/{id}")
+  @DeleteMapping
   @ResponseStatus(HttpStatus.GONE)
-  private void deleteAddress(@PathVariable("id") Long id) {
-    addressRepository.deleteById(id);
+  private void deleteAddress(@ModelAttribute GenericIdRequest genericIdRequest) {
+    addressRepository.deleteById(genericIdRequest.getId());
   }
 }
